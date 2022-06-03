@@ -1,8 +1,8 @@
-import { PagesComponent } from './pages/pages.component';
-import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { PagesComponent } from './pages/pages.component';
+import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { Grafica1Component } from './pages/grafica1/grafica1.component';
 import { ProgressComponent } from './pages/progress/progress.component';
