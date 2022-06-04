@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthRoutingModule } from './auth/auth.routing';
 import { PagesRoutingModule } from './pages/pages.routing';
 
 import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-
+  // path: '/dashboard' PagesRouting
+  // path: '/auth' AuthRouting
   { path: '**', component: NoPageFoundComponent },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    PagesRoutingModule
+    PagesRoutingModule,
+    AuthRoutingModule
   ],
   exports: [RouterModule]
 })
