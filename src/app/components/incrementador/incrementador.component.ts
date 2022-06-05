@@ -35,4 +35,22 @@ export class IncrementadorComponent implements OnInit {
     return this.progreso;
   }
 
+  onChange( valorInput: number ) {
+    if( valorInput >= 100 ) {
+      this.progreso = 100;
+    } else if( valorInput <= 0 ) {
+      this.progreso = 0;
+    } else {
+      this.progreso = valorInput;
+    }
+    this.valorSalida.emit( this.progreso );
+  }
+
+  validar() { //(keyup)="validar()" con esta validacion puedo controlar mas mi input
+    if( this.progreso >= 100 ) {
+      this.progreso = 100;
+    } else if( this.progreso < 0 ) {
+      this.progreso = 0;
+    }
+  }
 }
