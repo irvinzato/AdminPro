@@ -18,7 +18,7 @@ export class ProgressComponent  {
     return `${this.progreso2}%`;
   }
 
-  cambioValorHijo( valor: number ) { //Podria hacer asi pero es mejor hacer el cambio directo en el html
+  cambioValorHijo( valor: number ) { //Podria hacer asi pero es mejor hacer el cambio directo en el html (valorSalida)="progreso1 = $event" 
     console.log("Cambio valor ", valor);
     this.progreso1 = valor;
   }
