@@ -6,10 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-settings.component.css']
 })
 export class AccountSettingsComponent implements OnInit {
+  
+  linkTheme = document.querySelector('#theme'); //Id en index.html
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  changeTheme( theme: string ) {
+
+    const url = `./assets/css/colors/${theme}.css`;
+    this.linkTheme?.setAttribute( 'href', url );
+    localStorage.setItem( 'theme', url );
   }
 
 }
