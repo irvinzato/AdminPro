@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  menuItems: any;
+  menuItems: any[];
 
   constructor( private sidebarService: SidebarService ) {
     this.menuItems = sidebarService.menu;
