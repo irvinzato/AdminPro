@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rxjs',
@@ -9,8 +10,9 @@ import { interval, Observable } from 'rxjs';
 export class RxjsComponent implements OnInit {
 
   constructor() { 
+    let i = -1;
+
     const obs$ = new Observable( observer => {
-      let i = -1;
       const intervalo = setInterval( () => {
         i++;
         observer.next(i);
@@ -20,12 +22,15 @@ export class RxjsComponent implements OnInit {
           observer.complete();
         }
         if( i === 2 ) {
+          console.log('i es igual a 2, error');
           observer.error('i llego al valor de 2 que tome como error');
         }
       }, 1000);
     });
 
-    obs$.subscribe( 
+    obs$.pipe(
+      retry(1)
+    ).subscribe( 
     valor => console.log('Subs: ', valor),
     err => console.warn('Error: ', err),
     () => console.info('Observable terminado')
