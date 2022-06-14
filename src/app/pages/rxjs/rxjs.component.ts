@@ -10,9 +10,21 @@ import { retry } from 'rxjs/operators';
 export class RxjsComponent implements OnInit {
 
   constructor() { 
-    let i = -1;
+    this.retornaObervable().pipe(
+      retry(1)
+    ).subscribe( 
+    valor => console.log('Subs: ', valor),
+    err => console.warn('Error: ', err),
+    () => console.info('Observable terminado')
+    );
+  }
 
-    const obs$ = new Observable( observer => {
+  ngOnInit(): void {
+  }
+
+  retornaObervable(): Observable<number> {
+    let i = -1;
+    const obs$ = new Observable<number>( observer => {
       const intervalo = setInterval( () => {
         i++;
         observer.next(i);
@@ -27,17 +39,7 @@ export class RxjsComponent implements OnInit {
         }
       }, 1000);
     });
-
-    obs$.pipe(
-      retry(1)
-    ).subscribe( 
-    valor => console.log('Subs: ', valor),
-    err => console.warn('Error: ', err),
-    () => console.info('Observable terminado')
-    );
-  }
-
-  ngOnInit(): void {
+    return obs$;
   }
 
 }
