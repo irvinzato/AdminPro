@@ -22,10 +22,10 @@ export class RxjsComponent implements OnDestroy {
     this.intervalSubs = this.retornaIntervalo().subscribe( (valor) => console.log("Valor es ", valor) );
   
   }
+
   ngOnDestroy(): void {
     this.intervalSubs.unsubscribe();
   }
-
 
   retornaIntervalo(): Observable<number> {
     return interval(500)
