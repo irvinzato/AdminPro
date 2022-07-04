@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    
     this.usuarioService.loginUsuario( this.loginForm.value ).subscribe( res => {
       console.log("Login exitoso ", res );
       if( this.loginForm.get('remember')?.value ) {
@@ -65,6 +64,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       } else {
         localStorage.removeItem('email');
       }
+      this.router.navigateByUrl('/dashboard');
     }, (error) => {
       Swal.fire( 'Error', error.error.msg, 'error' );
     });
