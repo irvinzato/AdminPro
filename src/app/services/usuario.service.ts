@@ -34,4 +34,16 @@ export class UsuarioService {
             );
   }
 
+  loginGoogle( token: string ) {
+    /* console.log("TOKEN COMO STRING ", token);
+    console.log("TOKEN COMO OBJETO { token } ", { token }); */
+    return this.http.post( `${ baseUrl }/login/google`, { token } )
+            .pipe(
+              tap( (res: any) => {
+                console.log("Respuesta desde el servicio ", res);
+                localStorage.setItem('token', res.token);
+              })
+            );
+  }
+
 }

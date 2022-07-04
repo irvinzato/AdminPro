@@ -36,7 +36,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   googleInit() {
     google.accounts.id.initialize({
       client_id: '452650851438-ejdjhff40ju2slev6k2fb54q1v92m2c6.apps.googleusercontent.com',
-      callback: this.handleCredentialResponse
+      //Lo cambie a esta manera por que dentro del "handleCredentialResponse" el this hace referencia a otro objeto si no le paso la response
+      callback: (response: any) => this.handleCredentialResponse(response)
     });
 
     google.accounts.id.renderButton(
@@ -47,7 +48,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   handleCredentialResponse( response: any ) {
-    console.log("TOKEN DE GOOGLE: " + response.credential);
+    //console.log({ algo: this });
+    //console.log("TOKEN DE GOOGLE: " + response.credential);
+    this.usuarioService.loginGoogle( response.credential ).subscribe( res => {
+      console.log( "Llamado a servicio desde el componente ", {login: res} );
+      this.router.navigateByUrl('/dashboard');
+    });
   }
 
   login() {
