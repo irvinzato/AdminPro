@@ -9,7 +9,6 @@ import { UsuarioService } from './../services/usuario.service';
 })
 export class AuthGuard implements CanActivate {
 
-  respuestaServicio: boolean = false;
   constructor( private usuarioService: UsuarioService, private router: Router ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Boolean | any{
