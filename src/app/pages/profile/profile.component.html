@@ -4,13 +4,16 @@
             <div class="card-body">
                 <h4 class="card-title">Perfil de usuario</h4>
                 <h6 class="card-subtitle">Ajustes</h6>
-                <form class="form p-t-20">
+                <form class="form p-t-20" 
+                [formGroup]="profileForm"
+                (ngSubmit)="updateProfile()">
                     
                     <div class="form-group">
                         <label for="exampleInputuname">User Name</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ti-user"></i></div>
-                            <input type="text" class="form-control" id="exampleInputuname" placeholder="Username">
+                            <input type="text" class="form-control" id="exampleInputuname"
+                            placeholder="Username" formControlName="nombre" >
                         </div>
                     </div>
 
@@ -18,11 +21,15 @@
                         <label for="exampleInputEmail1">Email address</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ti-email"></i></div>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                            placeholder="Enter email" formControlName="email">
                         </div>
                     </div>
                    
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar cambios</button>
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"
+                            [disabled]="profileForm.invalid"> 
+                        <i class="fa fa-save"></i> Guardar cambios
+                    </button>
                
                 </form>
             </div>
