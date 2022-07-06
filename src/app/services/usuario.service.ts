@@ -32,17 +32,14 @@ export class UsuarioService {
           'x-token': token
         }
       }).pipe(
-        tap((res: any) => {
+        map((res: any) => { //Quite el tap y deje solo el map por que puede ser que el map resuelva primero antes que el tap, para evitar ese tipo de errores
           //console.log("Respuesta del servicio renovarToken, lo uso en el Guard ", res);
-
-          const { email, google, img, nombre, rol, uid } = res.usuarioDB;
+          const { email, google, img = '', nombre, rol, uid } = res.usuarioDB;
 
           this.usuario = new Usuario( nombre, email, '', google, img, rol, uid);
           this.usuario.imprimirNombre();
          
           localStorage.setItem('token', res.token);
-        }),
-        map( res => {
           return true;
         }),
         catchError( error => {
