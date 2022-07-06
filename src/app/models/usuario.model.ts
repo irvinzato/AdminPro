@@ -1,5 +1,9 @@
 //Para usar todas las propiedades que tiene este modelo o clase se debe instancear cuando se ocupe "... = new Usuario()"
 //Es muy parecido a mis interfaces
+import { environment } from "src/environments/environment";
+
+const baseUrl = environment.baseUrl;
+
 export class Usuario {
     constructor(
         public nombre: string,
@@ -15,6 +19,18 @@ export class Usuario {
     imprimirNombre() {
         console.log( "Nombre de usuario ", this.nombre );
     }
+
+    get imagenUrl(){
+        if( this.img?.includes('https') ) {
+            return this.img;
+        }
+        if( this.img ) {
+            return `${ baseUrl }/upload/usuarios/${ this.img }`;
+        } else {
+            return `${ baseUrl }/upload/usuarios/no-image`;
+        }
+    }
+
 }
 
 

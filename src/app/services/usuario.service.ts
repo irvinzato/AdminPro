@@ -33,7 +33,7 @@ export class UsuarioService {
         }
       }).pipe(
         tap((res: any) => {
-          console.log("Respuesta del servicio renovarToken, lo uso en el Guard ", res);
+          //console.log("Respuesta del servicio renovarToken, lo uso en el Guard ", res);
 
           const { email, google, img, nombre, rol, uid } = res.usuarioDB;
 
