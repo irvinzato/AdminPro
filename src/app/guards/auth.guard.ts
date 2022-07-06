@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor( private usuarioService: UsuarioService, private router: Router ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Boolean | any{
-      console.log('Paso por el canActivate del guard auth, true deja mostrar las rutas, false las bloquea');
+      //console.log('Paso por el canActivate del guard auth, true deja mostrar las rutas, false las bloquea');
       return this.usuarioService.renovarToken()
             .pipe(
               tap( res => {

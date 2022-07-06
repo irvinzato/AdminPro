@@ -16,9 +16,9 @@ export class BreadcrumbsComponent implements OnDestroy {
   constructor( private router: Router ) {
     this.tituloSubs$ = this.getArgumentosRuta()
                       .subscribe( res => {
-                        console.log( res );
+                        //console.log( res );
                         this.titulo = res.titulo;
-                        console.log("Titulo es ", this.titulo);
+                        //console.log("Titulo es ", this.titulo);
                         document.title = `AdminPro - ${res.titulo}`;   //Para cambiar el nombre de la ventana en el navegador
                       });
   }
