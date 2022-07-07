@@ -12,7 +12,6 @@ import { UsuarioService } from './../../services/usuario.service';
 export class ProfileComponent implements OnInit {
 
   profileForm!: FormGroup;
-
   usuario: Usuario;
 
   constructor( private fb: FormBuilder, private usuarioService: UsuarioService ) { 
@@ -21,15 +20,18 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileForm = this.fb.group({
-      nombre: [ '123', [ Validators.required ] ],
-      email: [ '123', [ Validators.required, Validators.email ] ]
+      nombre: [ this.usuario.nombre , [ Validators.required ] ],
+      email: [ this.usuario.email , [ Validators.required, Validators.email ] ]
     });
   }
 
   updateProfile() {
-    console.log( this.profileForm.value );
     this.usuarioService.actualizarPerfil( this.profileForm.value ).subscribe( res => {
       console.log("Respues del servicio actualizar perfil desde el componente ", res);
+      const { nombre, email } = this.profileForm.value;
+      //Aun que parece que es un objeto local, en realdiad modifica todos los valores de la instancia(Por eso se refleja el cambio en el sidebar y header al instante)
+      this.usuario.nombre = nombre;
+      this.usuario.email = email;
     });
   }
 
