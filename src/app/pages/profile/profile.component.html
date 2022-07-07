@@ -43,9 +43,12 @@
                 <h6 class="card-subtitle">Selección de imagen</h6>
 
                 <img src="">
-                <input type="file">
+                <input type="file" (change)="changeImage($event)">
                 <br> <br>
-                <button type="button" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Cambiar imagen</button>
+                <button type="button" class="btn btn-success waves-effect waves-light m-r-10"
+                        [disabled]="selectedImage === undefined" (click)="updateImage()"> 
+                    <i class="fa fa-save"></i> Cambiar imagen
+                </button>
 
             </div>
         </div>
