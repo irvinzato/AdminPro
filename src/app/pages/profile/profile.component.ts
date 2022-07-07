@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   usuario: Usuario;
   selectedImage!: File;
+  imgTemp: any = '';
 
   constructor( private fb: FormBuilder, private usuarioService: UsuarioService,
                private fileUploadService: FileUploadService ) { 
@@ -43,13 +44,27 @@ export class ProfileComponent implements OnInit {
   changeImage( event: any ) {
     //El event del metodo hay que explorarlo, la imagne esta dentro de "event.target.files"
     this.selectedImage = event.target.files[0];
-    //console.log("archivo seleccionado ", this.selectedImage);
+    if( !this.selectedImage ) { 
+      //Si el usuario cancela la imagen entonces otra ves dejo vacia la imagen temporal y mostraria la que ya tiene actualmente 
+      this.imgTemp = ''; 
+      return; 
+    }
+    //Esto es para mostrar la imagen seleccionada previamente(No ocupa importaciones por que es propio de Js)
+    const reader = new FileReader();
+    reader.readAsDataURL( this.selectedImage );
+
+    reader.onloadend = () => {
+      console.log("Resultado del reader", reader.result);
+      this.imgTemp = reader.result;
+    }
   }
 
   updateImage() {
     this.fileUploadService.actualizarFoto( this.selectedImage, 'usuarios', this.usuario.uid! )
     .then( res =>  {
       console.log("Respuesta en el componente para subir imagen ", res);
+      //Como el objeto pasa por referencia actualiza en todos los lugares
+      this.usuario.img = res;
       Swal.fire('Cambio de imagen exitosa', '', 'success');
     });
   }

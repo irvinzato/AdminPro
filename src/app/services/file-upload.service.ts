@@ -11,6 +11,7 @@ export class FileUploadService {
 
   constructor() { }
 
+  //Regresa un string con el nombre del archivo en caso correcto o false en caso de error con mensaje de error en consola
   async actualizarFoto( archivo: File, tipo: 'usuarios' | 'medicos' | 'hospitales', id: string ) {
     try {
       
@@ -30,8 +31,12 @@ export class FileUploadService {
       //En el fetch aqui viene la respuesta del EP "resp.json()"
       const data = await resp.json();
 
-      console.log("Respuesta del actualizarFoto mediante fetch ", data);
-      return `Imagen actualizada a ${ archivo }`;
+      if( data.ok ) {
+        return data.nombreArchivo;
+      } else {
+        console.log( data.msg );
+        return false;
+      }
 
     } catch (error) {
       console.log(error);
