@@ -38,6 +38,9 @@ export class ProfileComponent implements OnInit {
       this.usuario.nombre = nombre;
       this.usuario.email = email;
       Swal.fire('Cambios de datos exitosos', '', 'success');
+    }, (error) => {
+      //console.log(error);
+      Swal.fire(`Error ${error.status}`, error.error.msg, 'error');
     });
   }
 
@@ -54,7 +57,7 @@ export class ProfileComponent implements OnInit {
     reader.readAsDataURL( this.selectedImage );
 
     reader.onloadend = () => {
-      console.log("Resultado del reader", reader.result);
+      //console.log("Resultado del reader", reader.result);
       this.imgTemp = reader.result;
     }
   }
@@ -64,6 +67,10 @@ export class ProfileComponent implements OnInit {
     .then( res =>  {
       console.log("Respuesta en el componente para subir imagen ", res);
       //Como el objeto pasa por referencia actualiza en todos los lugares
+      if( res.includes('no') ) {
+        Swal.fire(`Error`, res, 'error');
+        return;
+      }
       this.usuario.img = res;
       Swal.fire('Cambio de imagen exitosa', '', 'success');
     });

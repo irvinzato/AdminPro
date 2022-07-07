@@ -34,13 +34,13 @@ export class FileUploadService {
       if( data.ok ) {
         return data.nombreArchivo;
       } else {
-        console.log( data.msg );
-        return false;
+        console.log("1", data.msg );
+        return data.msg;
       }
 
     } catch (error) {
-      console.log(error);
-     return false;
+      console.log("2", error);
+      return false;
     }
   }
 
