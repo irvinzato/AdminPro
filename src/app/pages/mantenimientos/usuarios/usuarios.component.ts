@@ -12,15 +12,31 @@ export class UsuariosComponent implements OnInit {
 
   totalUsers: number = 0;
   usuarios: Usuario[] = [];
+  pag: number = 0;
 
   constructor( private usuarioService: UsuarioService ) { }
 
   ngOnInit(): void {
-    this.usuarioService.cargarUsuarios(0).subscribe(({ totalRegistros, usuarios }) => {
+    this.cargarUsuario();
+  }
+
+  cargarUsuario() {
+    this.usuarioService.cargarUsuarios( this.pag ).subscribe(({ totalRegistros, usuarios }) => {
       this.totalUsers = totalRegistros;
       this.usuarios = usuarios;
       console.log("Respuesta del servicio cargar usuarios ", this.totalUsers, " y ", this.usuarios);
     });
+  }
+
+  changePage( from: number ) {
+    this.pag += from;
+    if( this.pag < 0 ) {
+      this.pag = 0;
+    }
+    if( this.pag >= this.totalUsers ) {
+      this.pag -= from;
+    }
+    this.cargarUsuario();
   }
 
 }
