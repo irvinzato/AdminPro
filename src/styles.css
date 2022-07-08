@@ -14,3 +14,12 @@
     width: 200px;
     height: 200px;
 }
+
+.w100 {
+    width: 100px;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 60px;
+}

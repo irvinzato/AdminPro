@@ -1,8 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 import { Observable, of } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 import { environment } from './../../environments/environment';
 import { RegisterForm } from '../interfaces/register-form.interface';
@@ -123,7 +124,17 @@ export class UsuarioService {
   }
 
   cargarUsuarios( desde: number = 0 ) {
-    return this.http.get<CargarUsuarios>( `${ baseUrl }/usuarios?desde=${ desde }`, this.getHeader );
+    return this.http.get<CargarUsuarios>( `${ baseUrl }/usuarios?desde=${ desde }`, this.getHeader )
+           .pipe(
+            map( res => {
+              //Hago la intancia de usuarios para poder mostrar la imagen en la tabla
+              const usuarios = res.usuarios.map( usuario => new Usuario(usuario.nombre, usuario.email, '', usuario.google, usuario.img, usuario.rol, usuario.uid) )
+              return {
+                totalRegistros: res.totalRegistros,
+                usuarios
+              };
+            })
+           );
   }
   
 }
