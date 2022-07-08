@@ -9,6 +9,9 @@ import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from './../interfaces/login-form.interface';
 import { Usuario } from './../models/usuario.model';
 
+//Para sección de "Mantenimiento"
+import { CargarUsuarios } from './../interfaces/cargar-usuarios.interface';
+
 //Para poder utilizar el objeto que me ofrece Google
 declare const google: any;
 
@@ -32,6 +35,14 @@ export class UsuarioService {
 
   get getUid(): string {
     return this.usuario.uid || '';
+  }
+
+  get getHeader() {
+    return {
+      headers: {
+        'x-token': this.getToken
+      }
+    }
   }
     
   renovarToken(): Observable<Boolean> {
@@ -109,6 +120,10 @@ export class UsuarioService {
         this.router.navigateByUrl('/login');
       })
     });
+  }
+
+  cargarUsuarios( desde: number = 0 ) {
+    return this.http.get<CargarUsuarios>( `${ baseUrl }/usuarios?desde=${ desde }`, this.getHeader );
   }
   
 }
