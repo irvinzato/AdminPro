@@ -13,6 +13,7 @@ export class UsuariosComponent implements OnInit {
   totalUsers: number = 0;
   usuarios: Usuario[] = [];
   pag: number = 0;
+  loading: boolean = true;
 
   constructor( private usuarioService: UsuarioService ) { }
 
@@ -21,10 +22,12 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarUsuario() {
+    this.loading = true;
     this.usuarioService.cargarUsuarios( this.pag ).subscribe(({ totalRegistros, usuarios }) => {
       this.totalUsers = totalRegistros;
       this.usuarios = usuarios;
-      console.log("Respuesta del servicio cargar usuarios ", this.totalUsers, " y ", this.usuarios);
+      this.loading = false;
+      //console.log("Respuesta del servicio cargar usuarios ", this.totalUsers, " y ", this.usuarios);
     });
   }
 
