@@ -92,6 +92,8 @@ export class UsuarioService {
     .pipe(
       tap( (res: any) => {
         console.log("Respuesta desde el servicio de Google ", res);
+        /* this.usuario.img = res.picture;
+        console.log(this.usuario.img); */
         localStorage.setItem('token', res.token);
       })
       );
