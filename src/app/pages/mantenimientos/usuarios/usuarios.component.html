@@ -3,7 +3,9 @@
         <div class="card">
             <div class="card-body">
 
-                <input type="text" class="form-control" placeholder="Buscar usuarios...">
+    <!-- Tambien puedo ponerle una referencia local al input como "#text" y pasarlo en lugar del "$event" para no explorar todo el objeto y poner un boton que limpie la busqueda -->
+                <input type="text" class="form-control" placeholder="Buscar usuarios..."
+                       (keyup)="searchUsers($event)">
 
             </div>
         </div>
