@@ -11,6 +11,8 @@ import { Usuario } from './../../../models/usuario.model';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
+//Variable que puedo ocupar para saber que usuario hizo Login y quitarle la opción de borrar con ngIf
+  userId: string = '';
 
   totalUsers: number = 0;
   users: Usuario[] = [];
@@ -22,6 +24,7 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUsers();
+    this.userId = this.usuarioService.getUid;
   }
 
   loadUsers() {
@@ -60,6 +63,12 @@ export class UsuariosComponent implements OnInit {
   }
 
   deleteUser( usuario: Usuario ) {
+
+    if( usuario.uid === this.usuarioService.getUid ) {
+      Swal.fire('Error', 'No puedes borrarte a ti mismo', 'error');
+      return;
+    }
+ 
     Swal.fire({
       title: 'Eliminar usuario',
       text: `¿Estas seguro de eliminar a ${ usuario.nombre }`,
