@@ -62,6 +62,12 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  changeRole( user: Usuario ) {
+    this.usuarioService.actualizarUsuario( user ).subscribe( res => {
+      Swal.fire('Hecho', 'Actualización de rol correcta', 'success');
+    });
+  }
+
   deleteUser( usuario: Usuario ) {
 
     if( usuario.uid === this.usuarioService.getUid ) {

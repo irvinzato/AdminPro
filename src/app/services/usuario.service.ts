@@ -78,6 +78,7 @@ export class UsuarioService {
     );
   }
 
+  //ESTE SERVICIO LO OCUPO PARA ACTUALIZAR EMAIL Y NOMBRE DEL USUARIO QUE INGRESO 
   actualizarPerfil( data: {email: string, nombre: string, rol: string} ) {
     //Aqui digo data va a ser todo lo que trae data mas el "rol" que saque de mi usuario, por que en mi BackEnd puse obligatorio el campo del rol
     data = { ...data, rol: this.usuario.rol || '' };
@@ -86,6 +87,11 @@ export class UsuarioService {
         'x-token': this.getToken //Los metodos get se mandan a llamar sin parentesis "()"
       }
     });
+  }
+
+  //ESTE SERVICIO LO USO PARA ACTUALIZAR EN MI TABLA DE USUARIOS
+  actualizarUsuario( user: Usuario ) {
+    return this.http.put( `${ baseUrl }/usuarios/${ user.uid }`, user, this.getHeader );
   }
           
   loginUsuario( formData: LoginForm ) {
