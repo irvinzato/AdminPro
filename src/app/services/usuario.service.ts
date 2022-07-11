@@ -136,6 +136,10 @@ export class UsuarioService {
             })
            );
   }
+
+  eliminarUsuario( usuario: Usuario ) {
+    return this.http.delete( `${ baseUrl }/usuarios/${ usuario.uid }`, this.getHeader );
+  }
   
 }
 

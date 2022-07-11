@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 import { BusquedasService } from './../../../services/busquedas.service';
 import { UsuarioService } from './../../../services/usuario.service';
@@ -55,6 +56,28 @@ export class UsuariosComponent implements OnInit {
     this.busquedaService.buscar( 'usuarios', event.target.value ).subscribe( res => {
       //console.log("Respues de busqueda ", res);
       this.users = res;
+    });
+  }
+
+  deleteUser( usuario: Usuario ) {
+    Swal.fire({
+      title: 'Eliminar usuario',
+      text: `¿Estas seguro de eliminar a ${ usuario.nombre }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.usuarioService.eliminarUsuario( usuario ).subscribe( res => {
+          this.loadUsers();
+          Swal.fire(
+            'Eliminado!',
+            `Has eliminado al usuario ${ usuario.nombre }`,
+            'success'
+          );
+        });
+      }
     });
   }
 
