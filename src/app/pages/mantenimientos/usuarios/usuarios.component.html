@@ -5,7 +5,7 @@
 
     <!-- Tambien puedo ponerle una referencia local al input como "#text" y pasarlo en lugar del "$event" para no explorar todo el objeto y poner un boton que limpie la busqueda -->
                 <input type="text" class="form-control" placeholder="Buscar usuarios..."
-                       (keyup)="searchUsers($event)">
+                       (keyup)="searchUsers($event)" #txtTerm>
 
             </div>
         </div>
@@ -43,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let usuario of usuarios">
+                            <tr *ngFor="let usuario of users">
                                 <td class="text-center"> 
                                     <img [src]="usuario.imagenUrl" alt="Avatar de usuario" class="avatar"> 
                                 </td>
@@ -64,8 +64,10 @@
                     </table>
                 </div>
 
-                <button (click)="changePage(-5)" class="btn btn-secondary" style="margin-right: 10px;">Anteriores</button>
-                <button (click)="changePage(5)" class="btn btn-secondary">Siguientes</button>
+                <div *ngIf="txtTerm.value.length === 0">
+                    <button (click)="changePage(-5)" class="btn btn-secondary" style="margin-right: 10px;">Anteriores</button>
+                    <button (click)="changePage(5)" class="btn btn-secondary">Siguientes</button>
+                </div>
 
             </div>
         </div>

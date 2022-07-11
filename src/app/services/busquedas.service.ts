@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
+import { Usuario } from './../models/usuario.model';
 
 
 //La pongo aqui para no estar poniendo "this.baseUrl" cuando la ocupe, cuestion de gustos
@@ -28,11 +29,23 @@ export class BusquedasService {
     }
   }
 
+  private transformarUsuarios( resultados: any[] ): Usuario[] {
+    return resultados.map(
+      usuario => new Usuario(usuario.nombre, usuario.email, '', usuario.google, usuario.img, usuario.rol, usuario.uid)
+    );
+  }
+
   buscar( tipo: 'usuarios'|'medicos'|'hospitales', termino: string ) {
     return this.http.get<any []>( `${ baseUrl }/todo/coleccion/${ tipo }/${ termino }`, this.getHeader )
           .pipe(
             map( (res: any) => {
-              return res.resultados;
+              switch ( tipo ) {
+                case 'usuarios':
+                  return this.transformarUsuarios( res.resultados );
+              
+                default:
+                  return [];
+              }
             })
           );
   }

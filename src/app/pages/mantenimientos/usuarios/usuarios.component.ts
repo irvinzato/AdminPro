@@ -12,21 +12,23 @@ import { Usuario } from './../../../models/usuario.model';
 export class UsuariosComponent implements OnInit {
 
   totalUsers: number = 0;
-  usuarios: Usuario[] = [];
+  users: Usuario[] = [];
+  usersTemp: Usuario[] = [];
   pag: number = 0;
   loading: boolean = true;
 
   constructor( private usuarioService: UsuarioService, private busquedaService: BusquedasService ) { }
 
   ngOnInit(): void {
-    this.cargarUsuario();
+    this.loadUsers();
   }
 
-  cargarUsuario() {
+  loadUsers() {
     this.loading = true;
     this.usuarioService.cargarUsuarios( this.pag ).subscribe(({ totalRegistros, usuarios }) => {
       this.totalUsers = totalRegistros;
-      this.usuarios = usuarios;
+      this.users = usuarios;
+      this.usersTemp = usuarios;
       this.loading = false;
       //console.log("Respuesta del servicio cargar usuarios ", this.totalUsers, " y ", this.usuarios);
     });
@@ -40,14 +42,19 @@ export class UsuariosComponent implements OnInit {
     if( this.pag >= this.totalUsers ) {
       this.pag -= from;
     }
-    this.cargarUsuario();
+    this.loadUsers();
   }
 
   searchUsers( event: any ) {
-    console.log("Busqueda ", event.target.value);
+    //console.log("Busqueda ", event.target.value);
+    if( event.target.value.length === 0 ) {
+      this.users = this.usersTemp;
+      return;
+    }
+
     this.busquedaService.buscar( 'usuarios', event.target.value ).subscribe( res => {
       //console.log("Respues de busqueda ", res);
-      this.usuarios = res;
+      this.users = res;
     });
   }
 
