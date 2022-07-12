@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ModalImageService } from './../../services/modal-image.service';
+
 @Component({
   selector: 'app-modal-image',
   templateUrl: './modal-image.component.html',
@@ -7,15 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalImageComponent implements OnInit {
 
-  hideModal: boolean = false;
-
-  constructor() { }
+  //Si injecto publico el servicio puedo usar la propiedad en el HTML y pasar datos por referencia
+  constructor( public modalImageService: ModalImageService ) { }
 
   ngOnInit(): void {
   }
 
   closeModal() {
-    this.hideModal = true;
+    this.modalImageService.cerrarModal();
   }
 
 }

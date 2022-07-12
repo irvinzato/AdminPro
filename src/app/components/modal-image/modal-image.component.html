@@ -1,4 +1,4 @@
-<div class="fondo-modal-imagen oculto" [class.oculto]="hideModal">
+<div class="fondo-modal-imagen oculto" [class.oculto]="modalImageService.getOcultarModal">
     
     <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" style="display: block; padding-right: 17px;">
         <div class="modal-dialog" role="document">
@@ -23,7 +23,7 @@
                     </button>
                     <button type="button" class="btn btn-primary">Actualizar imagen</button>
                 </div>
-                
+
             </div>
         </div>
     </div>
