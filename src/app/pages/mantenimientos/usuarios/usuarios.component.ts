@@ -29,6 +29,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   constructor( private usuarioService: UsuarioService, private busquedaService: BusquedasService,
                private modalImageService: ModalImageService ) { }
 
+  //Si no quito la Suscripcion del Observable, puede consumir mucha memoria y llamarse mas de 1 ves
   ngOnDestroy(): void {
     this.imgSubs.unsubscribe();
   }
