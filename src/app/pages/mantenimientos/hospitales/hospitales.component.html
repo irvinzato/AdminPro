@@ -32,15 +32,16 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Imagen</th>
+                                <th class="w100">Imagen</th>
                                 <th>Nombre</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let hospital of hospitals">
-                                <td>
-                                    <img src="" alt="imagen a colocar">
+                                <td class="text-center">
+                                    <!-- Por defecto "hospital.img" es el primer argumento que recibe el pipe {{ hospital.img | imagen:'hospitales' }}, puedo usarlo sin detalles en otros componentes como muestro en en mi img -->
+                                    <img [src]="hospital.img | imagen:'hospitales'" [alt]="hospital.nombre" class="avatar cursorPointer">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control" placeholder="Nombre del hospital" [(ngModel)]="hospital.nombre">
