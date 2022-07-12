@@ -65,8 +65,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   openModal( user: Usuario ) {
-    console.log(user);
-    this.modalImageService.abrirModal();
+    //console.log(user);
+    this.modalImageService.abrirModal( 'usuarios', user.uid!, user.img );
   }
 
   changeRole( user: Usuario ) {

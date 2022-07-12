@@ -15,6 +15,13 @@
     
                 <div class="modal-body">
                     <h3>Seleccione imagen</h3>
+
+                    <div style="display: flex; justify-content: center; margin: 15px 0px;">
+                        <img *ngIf="!imgTemp" [src]="modalImageService.img" class="img-avatar">
+                        <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar">
+                    </div>
+    
+                    <input type="file" (change)="changeImage($event)" #inputFile>
                 </div>
     
                 <div class="modal-footer">
