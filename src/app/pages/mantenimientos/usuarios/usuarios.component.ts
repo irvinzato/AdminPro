@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import Swal from 'sweetalert2';
+
+import { delay } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 import { BusquedasService } from './../../../services/busquedas.service';
 import { ModalImageService } from './../../../services/modal-image.service';
@@ -11,9 +14,11 @@ import { Usuario } from './../../../models/usuario.model';
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
-export class UsuariosComponent implements OnInit {
-//Variable que puedo ocupar para saber que usuario hizo Login y quitarle la opción de borrar con ngIf
+export class UsuariosComponent implements OnInit, OnDestroy {
+  //Variable que puedo ocupar para saber que usuario hizo Login y quitarle la opción de borrar con ngIf
   userId: string = '';
+  //Variable que ocupo para destruir el Observable, asi evito fugas de memoria o que cargue mas de 1 ves
+  imgSubs!: Subscription;
 
   totalUsers: number = 0;
   users: Usuario[] = [];
@@ -24,9 +29,21 @@ export class UsuariosComponent implements OnInit {
   constructor( private usuarioService: UsuarioService, private busquedaService: BusquedasService,
                private modalImageService: ModalImageService ) { }
 
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.loadUsers();
     this.userId = this.usuarioService.getUid;
+
+    //Aqui estoy escuchando mi Observable y le doy un delay por que es demaciado rapido el cambio y puede no darle tiempo suficiente de mostrar la imagen
+    //Cada que le emiten un string detecta el cambio mi Observable "nuevaImagen"
+    this.imgSubs = this.modalImageService.nuevaImagen
+    .pipe(delay(200))
+    .subscribe(res => {
+      this.loadUsers();
+    });
   }
 
   loadUsers() {

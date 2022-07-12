@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 import { environment } from './../../environments/environment';
 
@@ -11,9 +11,11 @@ export class ModalImageService {
 
   private _ocultarModal: boolean = true;
 
-  public tipo! : string;
+  public tipo! : 'usuarios' | 'medicos' | 'hospitales';
   public id!   : string;
   public img!  : string;
+  //Este Observable lo ocupo para que identifique el cambio de imagen y actualice sin hacer refresh
+  public nuevaImagen: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
