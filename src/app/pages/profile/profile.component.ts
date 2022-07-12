@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
     .then( res =>  {
       console.log("Respuesta en el componente para subir imagen ", res);
       //Como el objeto pasa por referencia actualiza en todos los lugares
-      if( res.includes('no') ) {
+      if( res.includes('No') ) {
         Swal.fire(`Error`, res, 'error');
         return;
       }

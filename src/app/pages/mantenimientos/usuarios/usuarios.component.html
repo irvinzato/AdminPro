@@ -1,0 +1,85 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+    <!-- Tambien puedo ponerle una referencia local al input como "#text" y pasarlo en lugar del "$event" para no explorar todo el objeto y poner un boton que limpie la busqueda -->
+                <input type="text" class="form-control" placeholder="Buscar usuarios..."
+                       (keyup)="searchUsers($event)" #txtTerm>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col-12">
+       
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Agradecemos su paciencia</p>
+        </div>
+
+    </div>
+</div>
+
+<div *ngIf="!loading" class="row animated fadeIn ">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Total de usuarios - {{totalUsers}} </h4>
+                <h6 class="card-subtitle">Lista de todos los usuarios registrados en la aplicación <code>Admin Pro</code></h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="w100">Imagen</th>
+                                <th>Correo</th>
+                                <th>Nombre</th>
+                                <th class="w140">Rol</th>
+                                <th class="w100">Auth</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuario of users">
+                                <td class="text-center"> 
+                                    <img [src]="usuario.imagenUrl" alt="Avatar de usuario"
+                                    class="avatar cursorPointer" (click)="openModal( usuario )"> 
+                                </td>
+                                <td> {{ usuario.email }} </td>
+                                <td> {{ usuario.nombre }} </td>
+                                <td> 
+                                    <select class="form-control"
+                                            [(ngModel)]="usuario.rol"
+                                            (change)="changeRole( usuario )">
+                                        <option value="ADMIN_ROLE">Admin</option>
+                                        <option value="USER_ROLE">Usuario</option>
+                                    </select>
+                                </td>
+                                <td class="text-center">
+                                    <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                                    <span *ngIf="!usuario.google" class="label label-info">Email</span>
+                                </td>
+
+                                <td class="text-nowrap text-center">
+                                    <!-- <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a> -->
+
+                                    <a (click)="deleteUser(usuario)" data-toggle="tooltip" data-original-title="Borrar" class="cursorPointer"> <i class="fa fa-close text-danger"></i> </a>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <div *ngIf="txtTerm.value.length === 0">
+                    <button (click)="changePage(-5)" class="btn btn-secondary" style="margin-right: 10px;">Anteriores</button>
+                    <button (click)="changePage(5)" class="btn btn-secondary">Siguientes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
