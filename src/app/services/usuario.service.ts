@@ -1,13 +1,17 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 import { Observable, of } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 import { environment } from './../../environments/environment';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from './../interfaces/login-form.interface';
 import { Usuario } from './../models/usuario.model';
+
+//Para sección de "Mantenimiento"
+import { CargarUsuarios } from './../interfaces/cargar-usuarios.interface';
 
 //Para poder utilizar el objeto que me ofrece Google
 declare const google: any;
@@ -32,6 +36,14 @@ export class UsuarioService {
 
   get getUid(): string {
     return this.usuario.uid || '';
+  }
+
+  get getHeader() {
+    return {
+      headers: {
+        'x-token': this.getToken
+      }
+    }
   }
     
   renovarToken(): Observable<Boolean> {
@@ -66,6 +78,7 @@ export class UsuarioService {
     );
   }
 
+  //ESTE SERVICIO LO OCUPO PARA ACTUALIZAR EMAIL Y NOMBRE DEL USUARIO QUE INGRESO 
   actualizarPerfil( data: {email: string, nombre: string, rol: string} ) {
     //Aqui digo data va a ser todo lo que trae data mas el "rol" que saque de mi usuario, por que en mi BackEnd puse obligatorio el campo del rol
     data = { ...data, rol: this.usuario.rol || '' };
@@ -74,6 +87,11 @@ export class UsuarioService {
         'x-token': this.getToken //Los metodos get se mandan a llamar sin parentesis "()"
       }
     });
+  }
+
+  //ESTE SERVICIO LO USO PARA ACTUALIZAR EN MI TABLA DE USUARIOS
+  actualizarUsuario( user: Usuario ) {
+    return this.http.put( `${ baseUrl }/usuarios/${ user.uid }`, user, this.getHeader );
   }
           
   loginUsuario( formData: LoginForm ) {
@@ -109,6 +127,24 @@ export class UsuarioService {
         this.router.navigateByUrl('/login');
       })
     });
+  }
+
+  cargarUsuarios( desde: number = 0 ) {
+    return this.http.get<CargarUsuarios>( `${ baseUrl }/usuarios?desde=${ desde }`, this.getHeader )
+           .pipe(
+            map( res => {
+              //Hago la intancia de usuarios para poder mostrar la imagen en la tabla
+              const usuarios = res.usuarios.map( usuario => new Usuario(usuario.nombre, usuario.email, '', usuario.google, usuario.img, usuario.rol, usuario.uid) )
+              return {
+                totalRegistros: res.totalRegistros,
+                usuarios
+              };
+            })
+           );
+  }
+
+  eliminarUsuario( usuario: Usuario ) {
+    return this.http.delete( `${ baseUrl }/usuarios/${ usuario.uid }`, this.getHeader );
   }
   
 }
