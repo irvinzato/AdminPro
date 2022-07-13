@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
 
+//En lugar de instanciar mis hospitales, obtengo la imagen mediante este pipe
 const baseUrl = environment.baseUrl;
 @Pipe({
   name: 'imagen'
