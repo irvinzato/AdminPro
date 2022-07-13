@@ -102,7 +102,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
  
     Swal.fire({
       title: 'Eliminar usuario',
-      text: `¿Estas seguro de eliminar a ${ usuario.nombre }`,
+      text: `¿Estas seguro de eliminar a ${ usuario.nombre }?`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, eliminar'

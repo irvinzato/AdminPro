@@ -39,12 +39,11 @@ export class HospitalService {
   }
 
   crearHospital( nombre: string ) {
-    return this.http.post( `${ baseUrl }/hospitales`, nombre, this.getHeader );
- 
+    return this.http.post( `${ baseUrl }/hospitales`, { nombre }, this.getHeader );
   }
 
   actualizarHospital( id: string, nombre: string ) {
-    return this.http.put( `${ baseUrl }/hospitales/${ id }`, nombre, this.getHeader );
+    return this.http.put( `${ baseUrl }/hospitales/${ id }`, { nombre }, this.getHeader );
   }
 
   borrarHospital( id: string ) {
