@@ -3,7 +3,8 @@
         <div class="card">
             <div class="card-body">
 
-                <input type="text" class="form-control" placeholder="Buscar hospitales...">
+                <input type="text" class="form-control" 
+                       (keyup)="searchHospitals($event)" placeholder="Buscar hospitales...">
 
             </div>
         </div>
@@ -54,11 +55,11 @@
                                 <td class="text-center">
                                     <!-- Por defecto "hospital.img" es el primer argumento que recibe el pipe {{ hospital.img | imagen:'hospitales' }}, puedo usarlo sin detalles en otros componentes como muestro en en mi img -->
                                     <img [src]="hospital.img | imagen:'hospitales'" [alt]="hospital.nombre" 
-                                    class="avatar cursorPointer" (click)="openModal(hospital)">
+                                    class="img-hospital cursorPointer" (click)="openModal(hospital)">
                                 </td>
 
                                 <td>
-                                    <input type="text" class="form-control" placeholder="Nombre del hospital" [(ngModel)]="hospital.nombre">
+                                    <input type="text" class="form-control" placeholder="Nombre del hospital" [(ngModel)]="hospital.nombre" style="margin-top: 30px;">
                                 </td>
 
                                 <td class="text-nowrap text-center">

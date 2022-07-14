@@ -71,7 +71,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   searchUsers( event: any ) {
     //console.log("Busqueda ", event.target.value);
-    if( event.target.value.length === 0 ) {
+    if( event.target.value.trim().length === 0 ) {
       this.users = this.usersTemp;
       return;
     }

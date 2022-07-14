@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 import { Hospital } from './../../../models/hospital.model';
+import { BusquedasService } from './../../../services/busquedas.service';
 import { HospitalService } from './../../../services/hospital.service';
 import { ModalImageService } from './../../../services/modal-image.service';
 
@@ -19,7 +20,8 @@ export class HospitalesComponent implements OnInit, OnDestroy {
   load: boolean = true;
   imgSubs!: Subscription;
 
-  constructor( private hospitalService: HospitalService, private modalImageService: ModalImageService ) { }
+  constructor( private hospitalService: HospitalService, private modalImageService: ModalImageService,
+               private busquedaServie: BusquedasService ) { }
 
   ngOnInit(): void {
     this.loadingHospitals();
@@ -38,6 +40,17 @@ export class HospitalesComponent implements OnInit, OnDestroy {
     this.hospitalService.cargarHospitales().subscribe(res => {
       this.hospitals = res;
       this.load = false;
+    });
+  }
+
+  searchHospitals( event: any ) {
+    //console.log(event);
+    if( event.target.value.trim().length === 0 ) {
+      this.loadingHospitals();
+      return;
+    }
+    this.busquedaServie.buscar( 'hospitales', event.target.value ).subscribe( res => {
+      this.hospitals = res;
     });
   }
 
