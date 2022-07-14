@@ -20,6 +20,12 @@
     height: 100px;
 }
 
+.img-doctor {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
 .w100 {
     width: 100px;
 }
