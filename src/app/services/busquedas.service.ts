@@ -53,6 +53,9 @@ export class BusquedasService {
                 case 'hospitales':
                   return res.resultados;
 
+                case 'medicos':
+                  return res.resultados;
+
                 default:
                   return [];
               }

@@ -27,8 +27,8 @@ export class HospitalesComponent implements OnInit, OnDestroy {
     this.loadingHospitals();
 
     this.imgSubs = this.modalImageService.nuevaImagen
-    .pipe(delay(200))
-    .subscribe( res => this.loadingHospitals() );
+                  .pipe(delay(200))
+                  .subscribe( res => this.loadingHospitals() );
   }
 
   ngOnDestroy(): void {

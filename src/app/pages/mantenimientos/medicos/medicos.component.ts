@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { Medico } from './../../../models/medico.model';
+import { BusquedasService } from './../../../services/busquedas.service';
 import { MedicoService } from './../../../services/medico.service';
 import { ModalImageService } from './../../../services/modal-image.service';
 
@@ -9,15 +13,25 @@ import { ModalImageService } from './../../../services/modal-image.service';
   templateUrl: './medicos.component.html',
   styleUrls: ['./medicos.component.css']
 })
-export class MedicosComponent implements OnInit {
+export class MedicosComponent implements OnInit, OnDestroy {
 
   doctors: Medico [] = [];
   load: boolean = true;
+  imgSubs!: Subscription;
 
-  constructor( private medicoService: MedicoService, private modalImageService: ModalImageService ) { }
-
+  constructor( private medicoService: MedicoService, private modalImageService: ModalImageService,
+               private busquedaService: BusquedasService ) { }
+  
   ngOnInit(): void {
     this.loadingDoctors();
+    
+    this.imgSubs = this.modalImageService.nuevaImagen
+                  .pipe(delay(200))
+                  .subscribe( res => this.loadingDoctors() );
+  }
+  
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
   }
 
   loadingDoctors() {
@@ -30,6 +44,16 @@ export class MedicosComponent implements OnInit {
 
   openModal( doctor: Medico ) {
     this.modalImageService.abrirModal( 'medicos', doctor._id, doctor.img );
+  }
+
+  searchDoctors( term: string ) {
+    if( term.trim().length === 0 ) {
+      this.loadingDoctors();
+      return;
+    }
+    this.busquedaService.buscar( 'medicos', term ).subscribe(res => {
+      this.doctors = res;
+    });
   }
 
 }
