@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import Swal from 'sweetalert2';
 
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -53,6 +54,23 @@ export class MedicosComponent implements OnInit, OnDestroy {
     }
     this.busquedaService.buscar( 'medicos', term ).subscribe(res => {
       this.doctors = res;
+    });
+  }
+
+  deleteDoctor( doctor: Medico ) {
+    Swal.fire({
+      title: 'Eliminar doctor',
+      text: `¿Estas seguro de eliminar a ${ doctor.nombre }?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if(result.isConfirmed) {
+        this.medicoService.borrarMedico( doctor ).subscribe(res => {
+          Swal.fire('Eliminación correcta de', doctor.nombre, 'success');
+          this.loadingDoctors();
+        });
+      }
     });
   }
 
