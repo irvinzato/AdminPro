@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { Hospital } from './../../../models/hospital.model';
@@ -21,9 +21,18 @@ export class MedicoComponent implements OnInit {
   selectedHospital!: Hospital | undefined;
 
   constructor( private fb: FormBuilder, private hospitalService: HospitalService,
-               private medicoService: MedicoService, private router:Router ) { }
+               private medicoService: MedicoService, private router:Router,
+               private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit(): void {
+
+    this.activatedRoute.params.subscribe( params => {
+      console.log("Todos los parametros que estan en mi ruta mediante activatedRoute ", params);
+      if( params.id !== 'nuevo' ){
+        this.loadDoctor( params.id );
+      }
+    });
+
     this.doctorForm = this.fb.group({
       nombre: [ '', [Validators.required] ],
       hospital: [ '', [Validators.required] ]
@@ -40,6 +49,13 @@ export class MedicoComponent implements OnInit {
     });
   }
 
+  loadDoctor( id: string ) {
+    this.medicoService.obtenerMedicoPorId( id ).subscribe(medico => {
+      console.log(medico);
+      this.selectecDoctor = medico;
+    });
+  }
+
   loadHospitals() {
     this.hospitalService.cargarHospitales().subscribe(res => {
       this.hospitals = res;
@@ -47,7 +63,7 @@ export class MedicoComponent implements OnInit {
   }
 
   saveDoctor() {
-    console.log(this.doctorForm.value);
+    //console.log(this.doctorForm.value);
     this.medicoService.crearMedico( this.doctorForm.value ).subscribe((res: any) => {
       Swal.fire('Creación exitosa', `${this.doctorForm.value.nombre} creado correctamente`, 'success');
       this.router.navigateByUrl(`/dashboard/medico/${ res.medico._id }`);

@@ -48,5 +48,14 @@ export class MedicoService {
     return this.http.delete(`${ baseUrl }/medicos/${ medico._id }`, this.getHeader);
   }
 
+  obtenerMedicoPorId( id: string ) {
+    return this.http.get(`${ baseUrl }/medicos/${ id }`, this.getHeader)
+           .pipe(
+            map((res: any) => {
+              return res.medico;
+            })
+           );
+  }
+
 
 }
