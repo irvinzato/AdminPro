@@ -64,10 +64,10 @@
             <div class="card-body">
 
                 <h4 class="card-title">Hospital</h4>
-                <h6 class="card-subtitle">Hospital asignado</h6>
+                <h6 class="card-subtitle" *ngIf="selectedHospital !== undefined"> {{ selectedHospital.nombre }} </h6>
 
-                <div style="display: flex; justify-content: center;">
-                    <img [src]="'http://localhost:3000/api/upload/medicos/no-image'" alt="" class="img-avatar">
+                <div style="display: flex; justify-content: center;" *ngIf="selectedHospital !== undefined">
+                    <img [src]="selectedHospital.img | imagen:'hospitales'" alt="Imagen de hospital" class="img-avatar animated fadeIn">
                 </div>
 
             </div>

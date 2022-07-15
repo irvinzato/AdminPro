@@ -13,6 +13,7 @@ export class MedicoComponent implements OnInit {
 
   doctorForm!: FormGroup;
   hospitals: Hospital [] = [];
+  selectedHospital!: Hospital | undefined;
 
   constructor( private fb: FormBuilder, private hospitalService: HospitalService ) { }
 
@@ -23,6 +24,14 @@ export class MedicoComponent implements OnInit {
     });
 
     this.loadHospitals();
+
+    this.doctorForm.get('hospital')?.valueChanges.subscribe( hospitalId => {
+      //console.log("Respues del Observable valueChanges en hospital, me da el id del hospital seleccionado ", hospitalId);
+      //El metodo "find" es mas eficiente que "filter", al encontrar el primer valor que coincida termina
+      this.selectedHospital = this.hospitals.find( hospital => {
+        return hospital._id === hospitalId;
+      });
+    });
   }
 
   loadHospitals() {
