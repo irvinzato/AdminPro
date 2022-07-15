@@ -10,11 +10,12 @@
                       [formGroup]="doctorForm"
                       (submit)="saveDoctor()">
 
-                    <div class="form-group row">
+                    <div class="form-group row"
+                         *ngIf="selectecDoctor !== undefined">
                         <label for="exampleInputuname3" class="col-sm-3 control-label">Foto</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <img [src]="'http://localhost:3000/api/upload/medicos/no-image'" alt="" class="img-avatar">
+                                <img [src]="selectecDoctor.img | imagen:'medicos'" alt="Imagen de medico" class="img-avatar">
                             </div>
                         </div>
                     </div>

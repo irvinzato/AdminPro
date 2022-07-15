@@ -35,8 +35,8 @@ export class MedicoService {
            );
   }
 
-  //El BackEnd si recibe información extra en el body la va a ignorar
-  crearMedico( medico: Medico ) {
+  //El BackEnd si recibe información extra en el body la va a ignorar pero puedo especificar
+  crearMedico( medico: { nombre: string, hospital: string } ) {
     return this.http.post(`${ baseUrl }/medicos`, medico, this.getHeader);
   }
 
