@@ -17,7 +17,7 @@ export class MedicoComponent implements OnInit {
 
   doctorForm!: FormGroup;
   hospitals: Hospital [] = [];
-  selectecDoctor!: Medico;
+  selectedDoctor!: Medico;
   selectedHospital!: Hospital | undefined;
 
   constructor( private fb: FormBuilder, private hospitalService: HospitalService,
@@ -27,7 +27,7 @@ export class MedicoComponent implements OnInit {
   ngOnInit(): void {
 
     this.activatedRoute.params.subscribe( params => {
-      console.log("Todos los parametros que estan en mi ruta mediante activatedRoute ", params);
+      //console.log("Todos los parametros que estan en mi ruta mediante activatedRoute ", params);
       if( params.id !== 'nuevo' ){
         this.loadDoctor( params.id );
       }
@@ -51,8 +51,14 @@ export class MedicoComponent implements OnInit {
 
   loadDoctor( id: string ) {
     this.medicoService.obtenerMedicoPorId( id ).subscribe(medico => {
-      console.log(medico);
-      this.selectecDoctor = medico;
+      this.selectedDoctor = medico;
+      //Desestructuro el objeto medico por eso tengo que llamar igual las variales del "const"
+      const { nombre, hospital: { _id } } = medico;
+      console.log("DESESTRUCTURACION", nombre, _id);
+      //Metodo de los formularios reactivos para modificar sus valores
+      this.doctorForm.setValue({ nombre:nombre, hospital:_id });
+    },(error) => {
+      this.router.navigateByUrl(`/dashboard/medicos`);
     });
   }
 
@@ -63,11 +69,19 @@ export class MedicoComponent implements OnInit {
   }
 
   saveDoctor() {
-    //console.log(this.doctorForm.value);
-    this.medicoService.crearMedico( this.doctorForm.value ).subscribe((res: any) => {
-      Swal.fire('Creación exitosa', `${this.doctorForm.value.nombre} creado correctamente`, 'success');
-      this.router.navigateByUrl(`/dashboard/medico/${ res.medico._id }`);
-    });
+    //Si tenemos un medico seleccionado, voy a Actualizar, si no lo voy a Crear
+    if( this.selectedDoctor ) {
+      const data = { ...this.doctorForm.value, _id: this.selectedDoctor._id }
+      //console.log("DATA TIENE ", data);
+      this.medicoService.actualizarMedico( data ).subscribe(res => {
+        Swal.fire('Actualización exitosa', `${ data.nombre } actualizado correctamente`, 'success');
+      });
+    } else {
+      this.medicoService.crearMedico( this.doctorForm.value ).subscribe((res: any) => {
+        Swal.fire('Creación exitosa', `${ this.doctorForm.value.nombre } creado correctamente`, 'success');
+        this.router.navigateByUrl(`/dashboard/medico/${ res.medico._id }`);
+      });
+    }
   }
 
 }

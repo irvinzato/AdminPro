@@ -11,11 +11,11 @@
                       (submit)="saveDoctor()">
 
                     <div class="form-group row"
-                         *ngIf="selectecDoctor !== undefined">
+                         *ngIf="selectedDoctor !== undefined">
                         <label for="exampleInputuname3" class="col-sm-3 control-label">Foto</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <img [src]="selectecDoctor.img | imagen:'medicos'" alt="Imagen de medico" class="img-avatar">
+                                <img [src]="selectedDoctor.img | imagen:'medicos'" alt="Imagen de medico" class="img-avatar">
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,8 @@
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="ti-user"></i></div>
                                 <input type="text" class="form-control" id="exampleInputuname3" 
-                                       formControlName="nombre" placeholder="Nombre del medico">
+                                       formControlName="nombre" placeholder="Nombre del medico"
+                                       autocomplete="off">
                             </div>
                         </div>
                     </div>

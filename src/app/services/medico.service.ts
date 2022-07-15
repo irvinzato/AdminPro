@@ -40,7 +40,7 @@ export class MedicoService {
     return this.http.post(`${ baseUrl }/medicos`, medico, this.getHeader);
   }
 
-  actualizarMedico( medico: Medico ) {
+  actualizarMedico( medico: { nombre: string, hospital: string, _id: string } ) {
     return this.http.put(`${ baseUrl }/medicos/${ medico._id }`, medico, this.getHeader);
   }
 
