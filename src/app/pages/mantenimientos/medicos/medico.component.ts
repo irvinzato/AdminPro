@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+import { delay } from 'rxjs/operators';
+
 import { Hospital } from './../../../models/hospital.model';
 import { Medico } from './../../../models/medico.model';
 import { HospitalService } from './../../../services/hospital.service';
@@ -25,7 +27,6 @@ export class MedicoComponent implements OnInit {
                private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit(): void {
-
     this.activatedRoute.params.subscribe( params => {
       //console.log("Todos los parametros que estan en mi ruta mediante activatedRoute ", params);
       if( params.id !== 'nuevo' ){
@@ -50,7 +51,11 @@ export class MedicoComponent implements OnInit {
   }
 
   loadDoctor( id: string ) {
-    this.medicoService.obtenerMedicoPorId( id ).subscribe(medico => {
+    this.medicoService.obtenerMedicoPorId( id )
+    .pipe(
+      delay(100)
+    )
+    .subscribe(medico => {
       this.selectedDoctor = medico;
       //Desestructuro el objeto medico por eso tengo que llamar igual las variales del "const"
       const { nombre, hospital: { _id } } = medico;
