@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
+import { Hospital } from './../models/hospital.model';
 import { Usuario } from './../models/usuario.model';
 
 
@@ -29,10 +30,16 @@ export class BusquedasService {
     }
   }
 
+  //Lo hago para poder mostrar la imagen, ya que en Usuarios lo hice mediante instanciacion
   private transformarUsuarios( resultados: any[] ): Usuario[] {
     return resultados.map(
       usuario => new Usuario(usuario.nombre, usuario.email, '', usuario.google, usuario.img, usuario.rol, usuario.uid)
     );
+  }
+
+  //Este lo puedo usar si quiero para mantener el tipado y saber que regresa algo de tipo "Hospital []"
+  private transformarHospitales( resultados: any[] ): Hospital[] {
+    return resultados;
   }
 
   buscar( tipo: 'usuarios'|'medicos'|'hospitales', termino: string ) {
@@ -43,6 +50,12 @@ export class BusquedasService {
                 case 'usuarios':
                   return this.transformarUsuarios( res.resultados );
               
+                case 'hospitales':
+                  return res.resultados;
+
+                case 'medicos':
+                  return res.resultados;
+
                 default:
                   return [];
               }
