@@ -15,7 +15,6 @@ export class ModalImageComponent implements OnInit {
 
   selectedImage!: File;
   imgTemp: any = '';
-  
 
   //Si injecto publico el servicio puedo usar la propiedad en el HTML y pasar datos por referencia
   constructor( public modalImageService: ModalImageService, private fileUploadService: FileUploadService ) { }

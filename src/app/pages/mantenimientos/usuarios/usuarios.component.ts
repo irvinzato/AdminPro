@@ -29,6 +29,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   constructor( private usuarioService: UsuarioService, private busquedaService: BusquedasService,
                private modalImageService: ModalImageService ) { }
 
+  //Si no quito la Suscripcion del Observable, puede consumir mucha memoria y llamarse mas de 1 ves
   ngOnDestroy(): void {
     this.imgSubs.unsubscribe();
   }
@@ -70,7 +71,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   searchUsers( event: any ) {
     //console.log("Busqueda ", event.target.value);
-    if( event.target.value.length === 0 ) {
+    if( event.target.value.trim().length === 0 ) {
       this.users = this.usersTemp;
       return;
     }
@@ -101,7 +102,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
  
     Swal.fire({
       title: 'Eliminar usuario',
-      text: `¿Estas seguro de eliminar a ${ usuario.nombre }`,
+      text: `¿Estas seguro de eliminar a ${ usuario.nombre }?`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, eliminar'
