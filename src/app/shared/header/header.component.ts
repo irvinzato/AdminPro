@@ -21,4 +21,8 @@ export class HeaderComponent {
     this.usuarioService.logout();
   }
 
+  search( term: string ) {
+    console.log(term);
+  }
+
 }
