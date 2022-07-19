@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { BusquedaTotalComponent } from './busqueda-total/busqueda-total.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -31,6 +33,7 @@ const routes: Routes = [
             { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Observables rxjs' } },
             { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Account Settings' } },
             { path: 'profile', component: ProfileComponent, data: { titulo: 'Profile' }},
+            { path: 'buscar/:term', component: BusquedaTotalComponent, data: { titulo: 'Busqueda Total' }},
 
             //Mantenimientos
             { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' }},
