@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { BusquedasService } from './../../services/busquedas.service';
+import { Hospital } from './../../models/hospital.model';
+import { Medico } from './../../models/medico.model';
+import { Usuario } from './../../models/usuario.model';
 
 @Component({
   selector: 'app-busqueda-total',
@@ -8,12 +13,33 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BusquedaTotalComponent implements OnInit {
 
-  constructor( private activatedRoute: ActivatedRoute ) { }
+  users: Usuario[] = [];
+  doctors: Medico[] = [];
+  hospitals: Hospital[] = [];
+
+  constructor( private activatedRoute: ActivatedRoute, private busquedasService: BusquedasService,
+               private router: Router ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( params => {
       console.log(params.term);
+      this.globalSearch( params.term );
     });
+  }
+
+  globalSearch( term: string ) {
+    this.busquedasService.busquedaGlobal( term ).subscribe((res: any) => {
+      this.users     = res.usuarios;
+      this.doctors   = res.medicos;
+      this.hospitals = res.hospitales;
+      console.log("Usuarios ", this.users);
+      console.log("Medicos ", this.doctors);
+      console.log("Hospitales ", this.hospitals);
+    });
+  }
+
+  openDoctor( doctor: Medico ) {
+    this.router.navigateByUrl(`/dashboard/medico/${ doctor._id }`);
   }
 
 }

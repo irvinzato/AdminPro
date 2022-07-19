@@ -5,11 +5,11 @@
             <div class="card-body">
                 <h3>Usuarios</h3>
 
-                <div class="alert alert-info">
+                <div class="alert alert-info animated fadeInUp" *ngIf="users.length === 0">
                     <p class="mb-0">No hay usuarios con dicho término</p>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive animated fadeInUp" *ngIf="users.length !== 0">
                     <table class="table">
                         <thead>
                             <tr>
@@ -18,9 +18,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Deshmukh</td>
+                            <tr *ngFor="let user of users">
+                                <td> 
+                                    <img [src]="user.img | imagen:'usuarios'" alt="Imagen de usuarios" class="img-doctor">
+                                </td>
+                                <td> 
+                                    {{ user.nombre }} 
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -34,11 +38,11 @@
             <div class="card-body">
                 <h3>Médicos</h3>
 
-                <div class="alert alert-info">
+                <div class="alert alert-info animated fadeInUp" *ngIf="doctors.length === 0">
                     <p class="mb-0">No hay médicos con dicho término</p>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive animated fadeInUp" *ngIf="doctors.length !== 0">
                     <table class="table">
                         <thead>
                             <tr>
@@ -47,9 +51,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Deshmukh</td>
+                            <tr *ngFor="let doctor of doctors"
+                                (click)="openDoctor( doctor )"
+                                class="cursorPointer">
+                                <td>
+                                    <img [src]="doctor.img | imagen:'medicos'" alt="Imagen de médico" class="img-doctor">
+                                </td>
+                                <td>
+                                    <!-- Otra manera de hacer la navegacion
+                                        <a [routerLink]="['/dashboard/medico', doctor._id]">{{ doctor.nombre }}</a> -->
+                                    {{ doctor.nombre }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -63,11 +75,11 @@
             <div class="card-body">
                 <h3>Hospitales</h3>
 
-                <div class="alert alert-info">
+                <div class="alert alert-info animated fadeInUp" *ngIf="hospitals.length === 0">
                     <p class="mb-0">No hay hospitales con dicho término</p>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive animated fadeInUp" *ngIf="hospitals.length !== 0">
                     <table class="table">
                         <thead>
                             <tr>
@@ -76,9 +88,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Deshmukh</td>
+                            <tr *ngFor="let hospital of hospitals">
+                                <td>
+                                    <img [src]="hospital.img | imagen:'hospitales'" alt="Imagen de hospital" class="img-doctor">
+                                </td>
+                                <td>
+                                    {{ hospital.nombre }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>

@@ -63,4 +63,9 @@ export class BusquedasService {
           );
   }
 
+  //EndPoint que ocupo para buscar en todas las tablas de mi DB, ubicado en el header
+  busquedaGlobal( termino: string ) {
+    return this.http.get(`${ baseUrl }/todo/${ termino }`, this.getHeader);
+  }
+
 }
