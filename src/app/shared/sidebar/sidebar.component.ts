@@ -11,13 +11,14 @@ import { Usuario } from './../../models/usuario.model';
 })
 export class SidebarComponent implements OnInit {
 
-  menuItems: any[];
+  menuItems: any[] = [];
   usuario: Usuario;
   imgUrl: string = '';
   nameUser: string = '';
 
-  constructor( private sidebarService: SidebarService, private usuarioService: UsuarioService ) {
-    this.menuItems = sidebarService.menu;
+  //Pongo publico mi sidebarService para poder usarlo en el HTML
+  constructor( public sidebarService: SidebarService, private usuarioService: UsuarioService ) {
+    /* this.menuItems = sidebarService.menu; */
     this.usuario = usuarioService.usuario;
     /* Como es un get el ".imagenUrl" no necesito los parentesis "()" (Es una manera de hacerlo pero no eficiente, por eso mejor usa la instancia)
     this.imgUrl = usuarioService.usuario.imagenUrl;

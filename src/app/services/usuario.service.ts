@@ -61,6 +61,9 @@ export class UsuarioService {
         this.usuario.imprimirNombre();
         
         localStorage.setItem('token', res.token);
+        //Guardo el menu en formato string por que no permite guardar objetos
+        localStorage.setItem('menu', JSON.stringify(res.menu));
+
         return true;
       }),
       catchError( error => {
@@ -74,6 +77,7 @@ export class UsuarioService {
     .pipe(
       tap( (res: any) => {
         localStorage.setItem('token', res.token);
+        localStorage.setItem('menu', JSON.stringify(res.menu));
       })
     );
   }
@@ -99,6 +103,7 @@ export class UsuarioService {
     .pipe(
       tap( (res: any) => {
         localStorage.setItem('token', res.token);
+        localStorage.setItem('menu', JSON.stringify(res.menu));
       })
     );
   }
@@ -113,12 +118,15 @@ export class UsuarioService {
         /* this.usuario.img = res.picture;
         console.log(this.usuario.img); */
         localStorage.setItem('token', res.token);
+        localStorage.setItem('menu', JSON.stringify(res.menu));
       })
       );
   }
               
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
+
     //No importa si el correo existe o no, siempre realiza el procedimiento del callBack
     //Aun que tambien pudiera considerar si es un usuario de Google para llamar esta instrucción o no
     google.accounts.id.revoke( 'multizato@gmail.com', () => {

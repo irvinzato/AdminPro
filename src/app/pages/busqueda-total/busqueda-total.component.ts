@@ -32,9 +32,6 @@ export class BusquedaTotalComponent implements OnInit {
       this.users     = res.usuarios;
       this.doctors   = res.medicos;
       this.hospitals = res.hospitales;
-      console.log("Usuarios ", this.users);
-      console.log("Medicos ", this.doctors);
-      console.log("Hospitales ", this.hospitals);
     });
   }
 
