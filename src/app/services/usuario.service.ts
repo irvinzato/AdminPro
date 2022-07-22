@@ -33,17 +33,21 @@ export class UsuarioService {
   get getToken(): string {
     return localStorage.getItem('token') || '';
   }
-
-  get getUid(): string {
-    return this.usuario.uid || '';
-  }
-
+  
   get getHeader() {
     return {
       headers: {
         'x-token': this.getToken
       }
     }
+  }
+
+  get getUid(): string {
+    return this.usuario.uid || '';
+  }
+
+  get getRol(): string {
+    return this.usuario.rol || '';
   }
     
   renovarToken(): Observable<Boolean> {
