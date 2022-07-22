@@ -7,8 +7,7 @@ import { PagesRoutingModule } from './pages/pages.routing';
 import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
 
 const routes: Routes = [
-  // path: '/dashboard' PagesRouting
-  // path: '/auth' AuthRouting
+  //Pendiente: Revisar ruta vacia que hace match con login
   { path: '', redirectTo:'/dashboard', pathMatch: 'full' },
   { path: '**', component: NoPageFoundComponent },
 ];
