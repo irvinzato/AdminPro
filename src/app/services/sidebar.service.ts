@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SidebarService {
 
+  menu: any[] = [];
+
+  /* Lo pase por respuesta de autenticación en mi BackEnd 
   menu: any[] = [
     {
       titulo: 'Dashboard',
@@ -26,7 +30,18 @@ export class SidebarService {
         { titulo: 'Hospitales', url: '/dashboard/hospitales' }
       ]
     }
-  ];
+  ]; */
 
-  constructor() { }
+  constructor( private router: Router ) { }
+
+  //Remplazo el menu que tenia antes por el que me proporciona mi BackEnd en la respuesta de autenticación
+  loadingMenu() {
+    //Lo vuelvo a parsear por que para guardarlo lo hice string
+    this.menu = JSON.parse(localStorage.getItem('menu')!) || [];
+    //console.log("MENU ", this.menu);
+    //Hacer pruebas
+    if( this.menu.length === 0 ) {
+      this.router.navigateByUrl('/login');
+    } 
+  }
 }

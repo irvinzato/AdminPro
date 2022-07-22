@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { BusquedaTotalComponent } from './busqueda-total/busqueda-total.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -16,6 +17,7 @@ import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 
+import { AdminGuard } from './../guards/admin.guard';
 import { AuthGuard } from './../guards/auth.guard';
 
 const routes: Routes = [
@@ -31,12 +33,15 @@ const routes: Routes = [
             { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Observables rxjs' } },
             { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Account Settings' } },
             { path: 'profile', component: ProfileComponent, data: { titulo: 'Profile' }},
+            { path: 'buscar/:term', component: BusquedaTotalComponent, data: { titulo: 'Busqueda Total' }},
 
             //Mantenimientos
-            { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' }},
             { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de Medicos' }},
             { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Mantenimiento de Medicos' }},
             { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de Hospitales' }},
+            
+            //Rutas de Administrador
+            { path: 'usuarios', canActivate: [ AdminGuard ], component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' }},
         ]
     }
 ]
